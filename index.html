@@ -6,7 +6,7 @@
   <title>Business Bots – Presupuesto Express</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background: #000;
       color: #fff;
@@ -27,19 +27,23 @@
     }
     .lang-selector {
       display: flex;
-      justify-content: center; /* Centrar iconos */
-      gap: 8px;
+      justify-content: center;
+      gap: 12px;
       margin-bottom: 16px;
     }
-    .lang-selector img {
-      width: 32px;
-      height: 32px;
-      cursor: pointer;
+    .lang-flag {
       opacity: 0.6;
-      transition: opacity 0.2s;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: opacity 0.2s, background 0.2s;
     }
-    .lang-selector img.active, .lang-selector img:hover {
+    .lang-flag.active,
+    .lang-flag:hover {
       opacity: 1;
+      background: #222;
     }
     h1 {
       text-align: center;
@@ -96,6 +100,9 @@
       font-size: 0.75rem;
       color: #aaa;
       margin-top: 4px;
+    }
+    @media (max-width: 480px) {
+      .container { padding: 16px; }
     }
   </style>
 </head>
@@ -213,18 +220,16 @@
         document.getElementById('label-phone').textContent = t.phone;
         document.getElementById('phone').placeholder = t.phone;
         document.getElementById('btn-submit').textContent = t.btn;
-        document.querySelectorAll('.lang-selector .lang-flag').forEach(img => {
-          img.classList.toggle('active', img.id.endsWith(`-${lang}`));
+        document.querySelectorAll('.lang-flag').forEach(span => {
+          span.classList.toggle('active', span.id.endsWith(`-${lang}`));
         });
       }
 
-      ['es','en','de'].forEach(lang => {
+      ['es', 'en', 'de'].forEach(lang => {
         document.getElementById(`flag-${lang}`).addEventListener('click', () => setLanguage(lang));
       });
-      document.getElementById('flag-en').addEventListener('click', () => setLanguage('en'));
-      document.getElementById('flag-de').addEventListener('click', () => setLanguage('de'));
 
-      // Initialize default
+      // Initialize default language
       setLanguage('es');
 
       document.getElementById('quoteForm').addEventListener('submit', e => {
@@ -236,28 +241,21 @@
         const budgets = getSelected('budget');
         const name = document.getElementById('fullname').value.trim();
         const phone = document.getElementById('phone').value.trim();
-        const lang = Array.from(document.querySelectorAll('.lang-selector img')).find(img => img.classList.contains('active')).id.split('-')[1];
+        const langSpan = document.querySelector('.lang-flag.active');
+        const lang = langSpan ? langSpan.id.split('-')[1] : 'es';
         const greet = lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!';
         const t = translations[lang];
-        let msg = `${greet}
-
-`;
-        msg += `${t.sector}: ${sectors}
-`;
-        msg += `${t.service}: ${services}
-`;
-        msg += `${t.urgency}: ${urgencies}
-`;
-        msg += `${t.budget}: ${budgets}
-
-`;
-        msg += `${t.fullname}: ${name}
-`;
+        let msg = `${greet}\n\n`;
+        msg += `${t.sector}: ${sectors}\n`;
+        msg += `${t.service}: ${services}\n`;
+        msg += `${t.urgency}: ${urgencies}\n`;
+        msg += `${t.budget}: ${budgets}\n\n`;
+        msg += `${t.fullname}: ${name}\n`;
         msg += `${t.phone}: ${phone}`;
-        // Redirect with proper URL encoding of newlines
         window.location.href = `https://wa.me/34631690524?text=${encodeURIComponent(msg)}`;
       });
     });
   </script>
 </body>
 </html>
+
