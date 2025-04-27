@@ -8,7 +8,8 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      background:#000; color:#fff;
+      background: #fff;
+      color: #000;
       font-family:'Poppins',sans-serif;
       display:flex; flex-direction:column;
       align-items:center; min-height:100vh;
@@ -16,26 +17,32 @@
     }
     h1 {
       font-size:2rem; font-weight:700; margin-bottom:30px;
+      color:#000;
     }
     form {
+      background: #fff;
+      color: #000;
       width:100%; max-width:500px;
       display:flex; flex-direction:column; gap:15px;
+      padding:20px;
+      border-radius:8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       opacity:0; transform:translateY(20px);
       animation:fadeInUp 0.6s ease-out forwards;
     }
     @keyframes fadeInUp {
       to { opacity:1; transform:translateY(0); }
     }
-    label { font-size:1rem; text-align:left; }
-    input, select, textarea {
+    label { font-size:1rem; text-align:left; color:#000; }
+    select, input, textarea {
       width:100%; padding:10px;
-      border:2px solid #444; border-radius:8px;
-      background:rgba(255,255,255,0.05);
-      color:#fff; font-size:1rem;
+      border:1px solid #ccc; border-radius:6px;
+      background:#fff;
+      color:#000; font-size:1rem;
       font-family:'Poppins',sans-serif;
       transition:border-color .3s;
     }
-    input:focus, select:focus, textarea:focus {
+    select:focus, input:focus, textarea:focus {
       border-color:#008C45; outline:none;
     }
     textarea { resize:vertical; min-height:60px; }
@@ -44,31 +51,27 @@
       font-size:1.1rem; font-weight:700;
       color:#fff; text-decoration:none;
       border:2px solid; border-radius:16px;
-      background:transparent; cursor:pointer;
-      transition:color .3s;
-    }
-    .btn::before {
-      content:''; position:absolute;
-      top:-2px; left:-2px; right:-2px; bottom:-2px;
-      border-radius:16px;
       background:linear-gradient(45deg,#008C45,#F4F5F0,#CD212A);
-      z-index:-1; transition:box-shadow .3s;
+      cursor:pointer;
+      transition:opacity .3s;
     }
-    .btn:hover { color:#000; background:rgba(255,255,255,0.1); }
-    .btn:hover::before {
-      box-shadow:0 0 10px rgba(0,140,69,.7), 0 0 20px rgba(205,33,42,.7);
-    }
+    .btn:hover { opacity:0.9; }
   </style>
 </head>
 <body>
   <h1>Formulario de Presupuesto Express</h1>
   <form id="quoteForm">
     <label for="sector">1. ¿Cuál es tu sector o tipo de negocio?</label>
-    <input type="text" id="sector" placeholder="Ej: Restaurante, e-commerce" required>
+    <select id="sector" multiple required>
+      <option value="Restaurante">Restaurante</option>
+      <option value="e-commerce">e-commerce</option>
+      <option value="Retail">Retail</option>
+      <option value="Servicios">Servicios</option>
+      <option value="Otro">Otro</option>
+    </select>
 
-    <label for="service">2. ¿Qué servicio necesitas?</label>
-    <select id="service" required>
-      <option value="" disabled selected>Selecciona...</option>
+    <label for="service">2. ¿Qué servicios necesitas? (elige uno o más)</label>
+    <select id="service" multiple required>
       <option value="WhatsApp Bot">WhatsApp Bot</option>
       <option value="Email Marketing">Email Marketing</option>
       <option value="Instagram Bot">Instagram Bot</option>
@@ -77,14 +80,20 @@
       <option value="Otro">Otro</option>
     </select>
 
-    <label for="volume">3. Volumen aproximado</label>
-    <input type="text" id="volume" placeholder="Ej: 1000 mensajes/mes" required>
+    <label for="urgency">3. ¿Cuál es la urgencia del servicio?</label>
+    <select id="urgency" required>
+      <option value="Alta (24h)">Alta (24h)</option>
+      <option value="Media (3 días)">Media (3 días)</option>
+      <option value="Baja (1 semana)">Baja (1 semana)</option>
+    </select>
 
-    <label for="deadline">4. Plazo deseado</label>
-    <input type="text" id="deadline" placeholder="Ej: 2 semanas" required>
-
-    <label for="budget">5. Presupuesto aproximado</label>
-    <input type="text" id="budget" placeholder="Ej: 200€" required>
+    <label for="budget">4. Presupuesto aproximado</label>
+    <select id="budget" required>
+      <option value="<100€"><100€</option>
+      <option value="100€-500€">100€-500€</option>
+      <option value=">500€">>500€</option>
+      <option value="Otro">Otro</option>
+    </select>
 
     <label for="fullname">Nombre completo</label>
     <input type="text" id="fullname" placeholder="Tu nombre" required>
@@ -100,24 +109,22 @@
       const form = document.getElementById('quoteForm');
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const sector = document.getElementById('sector').value.trim();
-        const service = document.getElementById('service').value;
-        const volume = document.getElementById('volume').value.trim();
-        const deadline = document.getElementById('deadline').value.trim();
-        const budget = document.getElementById('budget').value.trim();
+        const sectors = Array.from(document.getElementById('sector').selectedOptions).map(o=>o.value).join(', ');
+        const services = Array.from(document.getElementById('service').selectedOptions).map(o=>o.value).join(', ');
+        const urgency = document.getElementById('urgency').value;
+        const budget = document.getElementById('budget').value;
         const fullname = document.getElementById('fullname').value.trim();
         const phone = document.getElementById('phone').value.trim();
 
         let message = `¡Hola Business Bots! Necesito una cotización:%0A%0A`;
-        message += `1. Sector: ${sector}%0A`;
-        message += `2. Servicio: ${service}%0A`;
-        message += `3. Volumen: ${volume}%0A`;
-        message += `4. Plazo: ${deadline}%0A`;
-        message += `5. Presupuesto: ${budget}%0A%0A`;
+        message += `1. Sector: ${sectors}%0A`;
+        message += `2. Servicios: ${services}%0A`;
+        message += `3. Urgencia: ${urgency}%0A`;
+        message += `4. Presupuesto: ${budget}%0A%0A`;
         message += `Nombre: ${fullname}%0A`;
         message += `WhatsApp: ${phone}`;
 
-        window.location.href = `https://wa.me/34XXXXXXXXX?text=${encodeURIComponent(message)}`;
+        window.location.href = `https://wa.me/34631690524?text=${encodeURIComponent(message)}`;
       });
     })();
   </script>
