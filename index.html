@@ -3,130 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Business Bots – Formulario de Presupuesto Express</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <title>Business Bots – Presupuesto Express</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #fff;
-      color: #000;
-      font-family:'Poppins',sans-serif;
-      display:flex; flex-direction:column;
-      align-items:center; min-height:100vh;
-      padding:20px; text-align:center;
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: #111;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 480px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(255,255,255,0.1);
+    }
+    .lang-selector {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .lang-selector img {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .lang-selector img.active, .lang-selector img:hover {
+      opacity: 1;
     }
     h1 {
-      font-size:2rem; font-weight:700; margin-bottom:30px;
-      color:#000;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 20px;
     }
     form {
-      background: #fff;
-      color: #000;
-      width:100%; max-width:500px;
-      display:flex; flex-direction:column; gap:15px;
-      padding:20px;
-      border-radius:8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      opacity:0; transform:translateY(20px);
-      animation:fadeInUp 0.6s ease-out forwards;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
-    @keyframes fadeInUp {
-      to { opacity:1; transform:translateY(0); }
+    .section {}
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #eee;
+      margin-bottom: 6px;
+      display: block;
     }
-    label { font-size:1rem; text-align:left; color:#000; }
-    select, input, textarea {
-      width:100%; padding:10px;
-      border:1px solid #ccc; border-radius:6px;
-      background:#fff;
-      color:#000; font-size:1rem;
-      font-family:'Poppins',sans-serif;
-      transition:border-color .3s;
+    select, input {
+      width: 100%;
+      padding: 10px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      outline: none;
+      transition: background 0.2s;
     }
-    select:focus, input:focus, textarea:focus {
-      border-color:#008C45; outline:none;
+    select:hover, input:hover {
+      background: #333;
     }
-    textarea { resize:vertical; min-height:60px; }
+    select[multiple] {
+      min-height: 80px;
+    }
     .btn {
-      position:relative; padding:15px 20px;
-      font-size:1.1rem; font-weight:700;
-      color:#fff; text-decoration:none;
-      border:2px solid; border-radius:16px;
-      background:linear-gradient(45deg,#008C45,#F4F5F0,#CD212A);
-      cursor:pointer;
-      transition:opacity .3s;
+      padding: 14px;
+      background: #25d366;
+      color: #000;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
     }
-    .btn:hover { opacity:0.9; }
+    .btn:hover {
+      background: #1ebe5a;
+    }
+    .note {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 4px;
+    }
   </style>
 </head>
 <body>
-  <h1>Formulario de Presupuesto Express</h1>
-  <form id="quoteForm">
-    <label for="sector">1. ¿Cuál es tu sector o tipo de negocio?</label>
-    <select id="sector" multiple required>
-      <option value="Restaurante">Restaurante</option>
-      <option value="e-commerce">e-commerce</option>
-      <option value="Retail">Retail</option>
-      <option value="Servicios">Servicios</option>
-      <option value="Otro">Otro</option>
-    </select>
-
-    <label for="service">2. ¿Qué servicios necesitas? (elige uno o más)</label>
-    <select id="service" multiple required>
-      <option value="WhatsApp Bot">WhatsApp Bot</option>
-      <option value="Email Marketing">Email Marketing</option>
-      <option value="Instagram Bot">Instagram Bot</option>
-      <option value="Tarjetas NFC">Tarjetas NFC</option>
-      <option value="Rediseño de Menú">Rediseño de Menú</option>
-      <option value="Otro">Otro</option>
-    </select>
-
-    <label for="urgency">3. ¿Cuál es la urgencia del servicio?</label>
-    <select id="urgency" required>
-      <option value="Alta (24h)">Alta (24h)</option>
-      <option value="Media (3 días)">Media (3 días)</option>
-      <option value="Baja (1 semana)">Baja (1 semana)</option>
-    </select>
-
-    <label for="budget">4. Presupuesto aproximado</label>
-    <select id="budget" required>
-      <option value="<100€"><100€</option>
-      <option value="100€-500€">100€-500€</option>
-      <option value=">500€">>500€</option>
-      <option value="Otro">Otro</option>
-    </select>
-
-    <label for="fullname">Nombre completo</label>
-    <input type="text" id="fullname" placeholder="Tu nombre" required>
-
-    <label for="phone">Teléfono WhatsApp</label>
-    <input type="tel" id="phone" placeholder="e.g. +34611234567" required>
-
-    <button type="submit" class="btn">Enviar Cotización vía WhatsApp</button>
-  </form>
-
+  <div class="container">
+    <div class="lang-selector">
+      <img src="https://flagcdn.com/w20/es.png" alt="Español" id="flag-es">
+      <img src="https://flagcdn.com/w20/gb.png" alt="English" id="flag-en">
+      <img src="https://flagcdn.com/w20/de.png" alt="Deutsch" id="flag-de">
+    </div>
+    <h1 id="title">Presupuesto Express</h1>
+    <form id="quoteForm">
+      <div class="section">
+        <label id="label-sector" for="sector">Sector o tipo de negocio</label>
+        <select id="sector" multiple required></select>
+        <p class="note">Pulsa para seleccionar/deseleccionar</p>
+      </div>
+      <div class="section">
+        <label id="label-service" for="service">Servicios necesarios</label>
+        <select id="service" multiple required></select>
+        <p class="note">Pulsa para seleccionar/deseleccionar</p>
+      </div>
+      <div class="section">
+        <label id="label-urgency" for="urgency">Urgencia del servicio</label>
+        <select id="urgency" multiple required></select>
+        <p class="note">Pulsa para seleccionar/deseleccionar</p>
+      </div>
+      <div class="section">
+        <label id="label-budget" for="budget">Presupuesto aproximado</label>
+        <select id="budget" multiple required></select>
+        <p class="note">Pulsa para seleccionar/deseleccionar</p>
+      </div>
+      <div class="section">
+        <label id="label-fullname" for="fullname">Nombre completo</label>
+        <input type="text" id="fullname" placeholder="Tu nombre" required>
+      </div>
+      <div class="section">
+        <label id="label-phone" for="phone">Teléfono WhatsApp</label>
+        <input type="tel" id="phone" placeholder="+34 611 26 02 59" required>
+      </div>
+      <button type="submit" class="btn" id="btn-submit">Enviar vía WhatsApp</button>
+    </form>
+  </div>
   <script>
-    (function() {
-      const form = document.getElementById('quoteForm');
-      form.addEventListener('submit', (e) => {
+    document.addEventListener('DOMContentLoaded', () => {
+      const translations = {
+        es: {
+          title: 'Presupuesto Express',
+          sector: 'Sector o tipo de negocio',
+          sectors: ['Restaurante', 'E-commerce', 'Retail', 'Servicios', 'Otro'],
+          service: 'Servicios necesarios',
+          services: ['WhatsApp Bot', 'Email Marketing', 'Instagram Bot', 'Tarjetas NFC', 'Rediseño de Menú', 'Otro'],
+          urgency: 'Urgencia del servicio',
+          urgencies: ['1 semana', '3 semanas', '+1 mes'],
+          budget: 'Presupuesto aproximado',
+          budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Otro'],
+          fullname: 'Nombre completo',
+          phone: 'Teléfono WhatsApp',
+          btn: 'Enviar vía WhatsApp'
+        },
+        en: {
+          title: 'Quick Quote',
+          sector: 'Sector / Business type',
+          sectors: ['Restaurant', 'E-commerce', 'Retail', 'Services', 'Other'],
+          service: 'Services required',
+          services: ['WhatsApp Bot', 'Email Marketing', 'Instagram Bot', 'NFC Cards', 'Menu Redesign', 'Other'],
+          urgency: 'Service urgency',
+          urgencies: ['1 week', '3 weeks', '+1 month'],
+          budget: 'Approx. budget',
+          budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Other'],
+          fullname: 'Full Name',
+          phone: 'WhatsApp Number',
+          btn: 'Send via WhatsApp'
+        },
+        de: {
+          title: 'Express Angebot',
+          sector: 'Branche / Geschäftstyp',
+          sectors: ['Restaurant', 'E-Commerce', 'Einzelhandel', 'Dienstleistungen', 'Andere'],
+          service: 'Erforderliche Services',
+          services: ['WhatsApp Bot', 'E-Mail Marketing', 'Instagram Bot', 'NFC Karten', 'Menü Neustaltung', 'Andere'],
+          urgency: 'Dringlichkeit',
+          urgencies: ['1 Woche', '3 Wochen', '+1 Monat'],
+          budget: 'Ungefähres Budget',
+          budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Andere'],
+          fullname: 'Vollständiger Name',
+          phone: 'WhatsApp Nummer',
+          btn: 'Per WhatsApp senden'
+        }
+      };
+
+      function populate(id, items) {
+        const select = document.getElementById(id);
+        select.innerHTML = '';
+        items.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item;
+          option.textContent = item;
+          select.appendChild(option);
+        });
+      }
+
+      function setLanguage(lang) {
+        const t = translations[lang];
+        document.getElementById('title').textContent = t.title;
+        document.getElementById('label-sector').textContent = t.sector;
+        populate('sector', t.sectors);
+        document.getElementById('label-service').textContent = t.service;
+        populate('service', t.services);
+        document.getElementById('label-urgency').textContent = t.urgency;
+        populate('urgency', t.urgencies);
+        document.getElementById('label-budget').textContent = t.budget;
+        populate('budget', t.budgets);
+        document.getElementById('label-fullname').textContent = t.fullname;
+        document.getElementById('fullname').placeholder = t.fullname;
+        document.getElementById('label-phone').textContent = t.phone;
+        document.getElementById('phone').placeholder = t.phone;
+        document.getElementById('btn-submit').textContent = t.btn;
+        document.querySelectorAll('.lang-selector img').forEach(img => {
+          img.classList.toggle('active', img.id.endsWith(`-${lang}`));
+        });
+      }
+
+      document.getElementById('flag-es').addEventListener('click', () => setLanguage('es'));
+      document.getElementById('flag-en').addEventListener('click', () => setLanguage('en'));
+      document.getElementById('flag-de').addEventListener('click', () => setLanguage('de'));
+
+      // Initialize default
+      setLanguage('es');
+
+      document.getElementById('quoteForm').addEventListener('submit', e => {
         e.preventDefault();
-        const sectors = Array.from(document.getElementById('sector').selectedOptions).map(o=>o.value).join(', ');
-        const services = Array.from(document.getElementById('service').selectedOptions).map(o=>o.value).join(', ');
-        const urgency = document.getElementById('urgency').value;
-        const budget = document.getElementById('budget').value;
-        const fullname = document.getElementById('fullname').value.trim();
+        const getSelected = id => Array.from(document.getElementById(id).selectedOptions).map(o => o.value).join(', ');
+        const sectors = getSelected('sector');
+        const services = getSelected('service');
+        const urgencies = getSelected('urgency');
+        const budgets = getSelected('budget');
+        const name = document.getElementById('fullname').value.trim();
         const phone = document.getElementById('phone').value.trim();
-
-        let message = `¡Hola Business Bots! Necesito una cotización:%0A%0A`;
-        message += `1. Sector: ${sectors}%0A`;
-        message += `2. Servicios: ${services}%0A`;
-        message += `3. Urgencia: ${urgency}%0A`;
-        message += `4. Presupuesto: ${budget}%0A%0A`;
-        message += `Nombre: ${fullname}%0A`;
-        message += `WhatsApp: ${phone}`;
-
-        window.location.href = `https://wa.me/34631690524?text=${encodeURIComponent(message)}`;
+        const lang = Array.from(document.querySelectorAll('.lang-selector img')).find(img => img.classList.contains('active')).id.split('-')[1];
+        const greet = lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!';
+        const t = translations[lang];
+        let msg = `${greet}%0A%0A`;
+        msg += `${t.sector}: ${sectors}%0A`;
+        msg += `${t.service}: ${services}%0A`;
+        msg += `${t.urgency}: ${urgencies}%0A`;
+        msg += `${t.budget}: ${budgets}%0A%0A`;
+        msg += `${t.fullname}: ${name}%0A`;
+        msg += `${t.phone}: ${phone}`;
+        window.location.href = `https://wa.me/34631690524?text=${encodeURIComponent(msg)}`;
       });
-    })();
+    });
   </script>
 </body>
 </html>
