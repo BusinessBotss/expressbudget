@@ -213,12 +213,14 @@
         document.getElementById('label-phone').textContent = t.phone;
         document.getElementById('phone').placeholder = t.phone;
         document.getElementById('btn-submit').textContent = t.btn;
-        document.querySelectorAll('.lang-selector img').forEach(img => {
+        document.querySelectorAll('.lang-selector .lang-flag').forEach(img => {
           img.classList.toggle('active', img.id.endsWith(`-${lang}`));
         });
       }
 
-      document.getElementById('flag-es').addEventListener('click', () => setLanguage('es'));
+      ['es','en','de'].forEach(lang => {
+        document.getElementById(`flag-${lang}`).addEventListener('click', () => setLanguage(lang));
+      });
       document.getElementById('flag-en').addEventListener('click', () => setLanguage('en'));
       document.getElementById('flag-de').addEventListener('click', () => setLanguage('de'));
 
