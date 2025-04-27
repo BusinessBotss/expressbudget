@@ -56,7 +56,6 @@
       flex-direction: column;
       gap: 18px;
     }
-    .section {}
     label {
       font-size: 0.9rem;
       font-weight: 600;
@@ -245,17 +244,16 @@
         const lang = langSpan ? langSpan.id.split('-')[1] : 'es';
         const greet = lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!';
         const t = translations[lang];
-        let msg = `${greet}\n\n`;
-        msg += `${t.sector}: ${sectors}\n`;
-        msg += `${t.service}: ${services}\n`;
-        msg += `${t.urgency}: ${urgencies}\n`;
-        msg += `${t.budget}: ${budgets}\n\n`;
-        msg += `${t.fullname}: ${name}\n`;
-        msg += `${t.phone}: ${phone}`;
-        window.location.href = `https://wa.me/34631690524?text=${encodeURIComponent(msg)}`;
+        let message = `${greet}\n\n`;
+        message += `${t.sector}: ${sectors}\n`;
+        message += `${t.service}: ${services}\n`;
+        message += `${t.urgency}: ${urgencies}\n`;
+        message += `${t.budget}: ${budgets}\n\n`;
+        message += `${t.fullname}: ${name}\n`;
+        message += `${t.phone}: ${phone}`;
+        window.location.href = `https://wa.me/34611260259?text=${encodeURIComponent(message)}`;
       });
     });
   </script>
 </body>
 </html>
-
