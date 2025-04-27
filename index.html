@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Bots – Formulario de Presupuesto Express</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background:#000; color:#fff;
+      font-family:'Poppins',sans-serif;
+      display:flex; flex-direction:column;
+      align-items:center; min-height:100vh;
+      padding:20px; text-align:center;
+    }
+    h1 {
+      font-size:2rem; font-weight:700; margin-bottom:30px;
+    }
+    form {
+      width:100%; max-width:500px;
+      display:flex; flex-direction:column; gap:15px;
+      opacity:0; transform:translateY(20px);
+      animation:fadeInUp 0.6s ease-out forwards;
+    }
+    @keyframes fadeInUp {
+      to { opacity:1; transform:translateY(0); }
+    }
+    label { font-size:1rem; text-align:left; }
+    input, select, textarea {
+      width:100%; padding:10px;
+      border:2px solid #444; border-radius:8px;
+      background:rgba(255,255,255,0.05);
+      color:#fff; font-size:1rem;
+      font-family:'Poppins',sans-serif;
+      transition:border-color .3s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color:#008C45; outline:none;
+    }
+    textarea { resize:vertical; min-height:60px; }
+    .btn {
+      position:relative; padding:15px 20px;
+      font-size:1.1rem; font-weight:700;
+      color:#fff; text-decoration:none;
+      border:2px solid; border-radius:16px;
+      background:transparent; cursor:pointer;
+      transition:color .3s;
+    }
+    .btn::before {
+      content:''; position:absolute;
+      top:-2px; left:-2px; right:-2px; bottom:-2px;
+      border-radius:16px;
+      background:linear-gradient(45deg,#008C45,#F4F5F0,#CD212A);
+      z-index:-1; transition:box-shadow .3s;
+    }
+    .btn:hover { color:#000; background:rgba(255,255,255,0.1); }
+    .btn:hover::before {
+      box-shadow:0 0 10px rgba(0,140,69,.7), 0 0 20px rgba(205,33,42,.7);
+    }
+  </style>
+</head>
+<body>
+  <h1>Formulario de Presupuesto Express</h1>
+  <form id="quoteForm">
+    <label for="sector">1. ¿Cuál es tu sector o tipo de negocio?</label>
+    <input type="text" id="sector" placeholder="Ej: Restaurante, e-commerce" required>
+
+    <label for="service">2. ¿Qué servicio necesitas?</label>
+    <select id="service" required>
+      <option value="" disabled selected>Selecciona...</option>
+      <option value="WhatsApp Bot">WhatsApp Bot</option>
+      <option value="Email Marketing">Email Marketing</option>
+      <option value="Instagram Bot">Instagram Bot</option>
+      <option value="Tarjetas NFC">Tarjetas NFC</option>
+      <option value="Rediseño de Menú">Rediseño de Menú</option>
+      <option value="Otro">Otro</option>
+    </select>
+
+    <label for="volume">3. Volumen aproximado</label>
+    <input type="text" id="volume" placeholder="Ej: 1000 mensajes/mes" required>
+
+    <label for="deadline">4. Plazo deseado</label>
+    <input type="text" id="deadline" placeholder="Ej: 2 semanas" required>
+
+    <label for="budget">5. Presupuesto aproximado</label>
+    <input type="text" id="budget" placeholder="Ej: 200€" required>
+
+    <label for="fullname">Nombre completo</label>
+    <input type="text" id="fullname" placeholder="Tu nombre" required>
+
+    <label for="phone">Teléfono WhatsApp</label>
+    <input type="tel" id="phone" placeholder="e.g. +34611234567" required>
+
+    <button type="submit" class="btn">Enviar Cotización vía WhatsApp</button>
+  </form>
+
+  <script>
+    (function() {
+      const form = document.getElementById('quoteForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const sector = document.getElementById('sector').value.trim();
+        const service = document.getElementById('service').value;
+        const volume = document.getElementById('volume').value.trim();
+        const deadline = document.getElementById('deadline').value.trim();
+        const budget = document.getElementById('budget').value.trim();
+        const fullname = document.getElementById('fullname').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+
+        let message = `¡Hola Business Bots! Necesito una cotización:%0A%0A`;
+        message += `1. Sector: ${sector}%0A`;
+        message += `2. Servicio: ${service}%0A`;
+        message += `3. Volumen: ${volume}%0A`;
+        message += `4. Plazo: ${deadline}%0A`;
+        message += `5. Presupuesto: ${budget}%0A%0A`;
+        message += `Nombre: ${fullname}%0A`;
+        message += `WhatsApp: ${phone}`;
+
+        window.location.href = `https://wa.me/34+34631690524text=${encodeURIComponent(message)}`;
+      });
+    })();
+  </script>
+</body>
+</html>
