@@ -102,9 +102,9 @@
 <body>
   <div class="container">
     <div class="lang-selector">
-      <img src="https://flagcdn.com/w20/es.png" alt="Español" id="flag-es">
-      <img src="https://flagcdn.com/w20/gb.png" alt="English" id="flag-en">
-      <img src="https://flagcdn.com/w20/de.png" alt="Deutsch" id="flag-de">
+      <span id="flag-es" class="lang-flag">ES</span>
+      <span id="flag-en" class="lang-flag">EN</span>
+      <span id="flag-de" class="lang-flag">GER</span>
     </div>
     <h1 id="title">Presupuesto Express</h1>
     <form id="quoteForm">
@@ -237,13 +237,22 @@
         const lang = Array.from(document.querySelectorAll('.lang-selector img')).find(img => img.classList.contains('active')).id.split('-')[1];
         const greet = lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!';
         const t = translations[lang];
-        let msg = `${greet}%0A%0A`;
-        msg += `${t.sector}: ${sectors}%0A`;
-        msg += `${t.service}: ${services}%0A`;
-        msg += `${t.urgency}: ${urgencies}%0A`;
-        msg += `${t.budget}: ${budgets}%0A%0A`;
-        msg += `${t.fullname}: ${name}%0A`;
+        let msg = `${greet}
+
+`;
+        msg += `${t.sector}: ${sectors}
+`;
+        msg += `${t.service}: ${services}
+`;
+        msg += `${t.urgency}: ${urgencies}
+`;
+        msg += `${t.budget}: ${budgets}
+
+`;
+        msg += `${t.fullname}: ${name}
+`;
         msg += `${t.phone}: ${phone}`;
+        // Redirect with proper URL encoding of newlines
         window.location.href = `https://wa.me/34631690524?text=${encodeURIComponent(msg)}`;
       });
     });
