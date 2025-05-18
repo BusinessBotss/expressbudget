@@ -160,7 +160,12 @@
           budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Otro'],
           fullname: 'Nombre completo',
           phone: 'Teléfono WhatsApp',
-          btn: 'Enviar vía WhatsApp'
+          btn: 'Enviar vía WhatsApp',
+          placeholder: {
+            select: 'Selecciona una opción',
+            name: 'Tu nombre',
+            phone: '+34 611 26 02 59'
+          }
         },
         en: {
           title: 'Express Budget',
@@ -174,7 +179,12 @@
           budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Other'],
           fullname: 'Full Name',
           phone: 'WhatsApp Number',
-          btn: 'Send via WhatsApp'
+          btn: 'Send via WhatsApp',
+          placeholder: {
+            select: 'Select an option',
+            name: 'Your name',
+            phone: '+44 7123 456789'
+          }
         },
         de: {
           title: 'Express Angebot',
@@ -188,13 +198,24 @@
           budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Andere'],
           fullname: 'Vollständiger Name',
           phone: 'WhatsApp Nummer',
-          btn: 'Per WhatsApp senden'
+          btn: 'Per WhatsApp senden',
+          placeholder: {
+            select: 'Option wählen',
+            name: 'Ihr Name',
+            phone: '+49 171 1234567'
+          }
         }
       };
 
-      function populate(id, items) {
+      function populate(id, items, placeholder) {
         const select = document.getElementById(id);
-        select.innerHTML = '<option value="" disabled selected>Selecciona una opción</option>';
+        select.innerHTML = '';
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = placeholder;
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        select.appendChild(defaultOption);
         items.forEach(item => {
           const option = document.createElement('option');
           option.value = item;
@@ -207,18 +228,21 @@
         const t = translations[lang];
         document.getElementById('title').textContent = t.title;
         document.getElementById('label-sector').textContent = t.sector;
-        populate('sector', t.sectors);
         document.getElementById('label-service').textContent = t.service;
-        populate('service', t.services);
         document.getElementById('label-urgency').textContent = t.urgency;
-        populate('urgency', t.urgencies);
         document.getElementById('label-budget').textContent = t.budget;
-        populate('budget', t.budgets);
         document.getElementById('label-fullname').textContent = t.fullname;
-        document.getElementById('fullname').placeholder = t.fullname;
         document.getElementById('label-phone').textContent = t.phone;
-        document.getElementById('phone').placeholder = t.phone;
         document.getElementById('btn-submit').textContent = t.btn;
+
+        document.getElementById('fullname').placeholder = t.placeholder.name;
+        document.getElementById('phone').placeholder = t.placeholder.phone;
+
+        populate('sector', t.sectors, t.placeholder.select);
+        populate('service', t.services, t.placeholder.select);
+        populate('urgency', t.urgencies, t.placeholder.select);
+        populate('budget', t.budgets, t.placeholder.select);
+
         document.querySelectorAll('.lang-flag').forEach(span => {
           span.classList.toggle('active', span.id.endsWith(`-${lang}`));
         });
@@ -228,22 +252,36 @@
         document.getElementById(`flag-${lang}`).addEventListener('click', () => setLanguage(lang));
       });
 
+      document.getElementById('sector').addEventListener('change', function () {
+        const selected = this.value;
+        const langMap = {
+          'Restaurante': 'es', 'E-commerce': 'es', 'Retail': 'es', 'Servicios': 'es', 'Otro': 'es',
+          'Restaurant': 'en', 'Services': 'en', 'Other': 'en',
+          'E-Commerce': 'de', 'Einzelhandel': 'de', 'Dienstleistungen': 'de', 'Andere': 'de'
+        };
+        const lang = langMap[selected] || 'es';
+        setLanguage(lang);
+      });
+
       setLanguage('es');
 
       document.getElementById('quoteForm').addEventListener('submit', e => {
         e.preventDefault();
         const getValue = id => document.getElementById(id).value;
-        const sectors = getValue('sector');
-        const services = getValue('service');
-        const urgencies = getValue('urgency');
-        const budgets = getValue('budget');
-        const name = document.getElementById('fullname').value.trim();
-        const phone = document.getElementById('phone').value.trim();
         const lang = document.querySelector('.lang-flag.active')?.id.split('-')[1] || 'es';
         const t = translations[lang];
-        const greet = lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!';
-        const msg = `${greet}\n\n${t.sector}: ${sectors}\n${t.service}: ${services}\n${t.urgency}: ${urgencies}\n${t.budget}: ${budgets}\n\n${t.fullname}: ${name}\n${t.phone}: ${phone}`;
-        window.location.href = `https://wa.me/34611260259?text=${encodeURIComponent(msg)}`;
+        const message = 
+`${lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!'}
+        
+${t.sector}: ${getValue('sector')}
+${t.service}: ${getValue('service')}
+${t.urgency}: ${getValue('urgency')}
+${t.budget}: ${getValue('budget')}
+
+${t.fullname}: ${getValue('fullname')}
+${t.phone}: ${getValue('phone')}`;
+
+        window.location.href = `https://wa.me/34611260259?text=${encodeURIComponent(message)}`;
       });
     });
   </script>
