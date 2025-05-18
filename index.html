@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Business Bots – Presupuesto Express</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       background: #000;
       color: #fff;
@@ -17,91 +18,92 @@
       min-height: 100vh;
       padding: 20px;
     }
+
     .container {
       background: #111;
-      border-radius: 8px;
+      border-radius: 12px;
+      padding: 28px;
+      max-width: 500px;
       width: 100%;
-      max-width: 480px;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(255,255,255,0.1);
+      box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05);
     }
+
     .lang-selector {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 10px;
+      margin-bottom: 18px;
     }
+
     .lang-flag {
-      opacity: 0.6;
       cursor: pointer;
-      font-weight: 600;
+      opacity: 0.6;
       font-size: 0.9rem;
-      padding: 4px 8px;
+      padding: 5px 10px;
       border-radius: 4px;
-      transition: opacity 0.2s, background 0.2s;
+      font-weight: 600;
+      transition: all 0.2s ease;
     }
+
     .lang-flag.active,
     .lang-flag:hover {
-      opacity: 1;
       background: #222;
+      opacity: 1;
     }
+
     h1 {
       text-align: center;
       font-size: 1.8rem;
+      margin-bottom: 22px;
       font-weight: 600;
-      margin-bottom: 20px;
     }
+
     form {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 20px;
     }
+
     label {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
       font-weight: 600;
       color: #eee;
-      margin-bottom: 6px;
-      display: block;
     }
+
     select, input {
       width: 100%;
-      padding: 10px;
+      padding: 10px 12px;
       background: #222;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      outline: none;
-      transition: background 0.2s;
-    }
-    select:hover, input:hover {
-      background: #333;
-    }
-    select[multiple] {
-      min-height: 80px;
-    }
-    .btn {
-      padding: 14px;
-      background: #25d366;
-      color: #000;
-      font-size: 1rem;
-      font-weight: 600;
       border: none;
       border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
+      font-size: 1rem;
+      color: #fff;
       transition: background 0.2s;
     }
+
+    select:hover, input:hover {
+      background: #2c2c2c;
+    }
+
+    .btn {
+      background: #25d366;
+      color: #000;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
     .btn:hover {
       background: #1ebe5a;
     }
-    .note {
-      font-size: 0.75rem;
-      color: #aaa;
-      margin-top: 4px;
-    }
-    @media (max-width: 480px) {
-      .container { padding: 16px; }
+
+    @media (max-width: 500px) {
+      .container { padding: 20px; }
     }
   </style>
 </head>
@@ -113,38 +115,36 @@
       <span id="flag-de" class="lang-flag">GER</span>
     </div>
     <h1 id="title">Presupuesto Express</h1>
+
     <form id="quoteForm">
       <div class="section">
         <label id="label-sector" for="sector">Sector o tipo de negocio</label>
-        <select id="sector" multiple required></select>
-        <p class="note">Pulsa para seleccionar/deseleccionar</p>
+        <select id="sector" required></select>
       </div>
       <div class="section">
         <label id="label-service" for="service">Servicios necesarios</label>
-        <select id="service" multiple required></select>
-        <p class="note">Pulsa para seleccionar/deseleccionar</p>
+        <select id="service" required></select>
       </div>
       <div class="section">
         <label id="label-urgency" for="urgency">Urgencia del servicio</label>
-        <select id="urgency" multiple required></select>
-        <p class="note">Pulsa para seleccionar/deseleccionar</p>
+        <select id="urgency" required></select>
       </div>
       <div class="section">
         <label id="label-budget" for="budget">Presupuesto aproximado</label>
-        <select id="budget" multiple required></select>
-        <p class="note">Pulsa para seleccionar/deseleccionar</p>
+        <select id="budget" required></select>
       </div>
       <div class="section">
         <label id="label-fullname" for="fullname">Nombre completo</label>
-        <input type="text" id="fullname" placeholder="Tu nombre" required>
+        <input type="text" id="fullname" placeholder="Tu nombre" required />
       </div>
       <div class="section">
         <label id="label-phone" for="phone">Teléfono WhatsApp</label>
-        <input type="tel" id="phone" placeholder="+34 611 26 02 59" required>
+        <input type="tel" id="phone" placeholder="+34 611 26 02 59" required />
       </div>
       <button type="submit" class="btn" id="btn-submit">Enviar vía WhatsApp</button>
     </form>
   </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const translations = {
@@ -194,7 +194,7 @@
 
       function populate(id, items) {
         const select = document.getElementById(id);
-        select.innerHTML = '';
+        select.innerHTML = '<option value="" disabled selected>Selecciona una opción</option>';
         items.forEach(item => {
           const option = document.createElement('option');
           option.value = item;
@@ -228,32 +228,25 @@
         document.getElementById(`flag-${lang}`).addEventListener('click', () => setLanguage(lang));
       });
 
-      // Initialize default language
       setLanguage('es');
 
       document.getElementById('quoteForm').addEventListener('submit', e => {
         e.preventDefault();
-        const getSelected = id => Array.from(document.getElementById(id).selectedOptions).map(o => o.value).join(', ');
-        const sectors = getSelected('sector');
-        const services = getSelected('service');
-        const urgencies = getSelected('urgency');
-        const budgets = getSelected('budget');
+        const getValue = id => document.getElementById(id).value;
+        const sectors = getValue('sector');
+        const services = getValue('service');
+        const urgencies = getValue('urgency');
+        const budgets = getValue('budget');
         const name = document.getElementById('fullname').value.trim();
         const phone = document.getElementById('phone').value.trim();
-        const langSpan = document.querySelector('.lang-flag.active');
-        const lang = langSpan ? langSpan.id.split('-')[1] : 'es';
-        const greet = lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!';
+        const lang = document.querySelector('.lang-flag.active')?.id.split('-')[1] || 'es';
         const t = translations[lang];
-        let message = `${greet}\n\n`;
-        message += `${t.sector}: ${sectors}\n`;
-        message += `${t.service}: ${services}\n`;
-        message += `${t.urgency}: ${urgencies}\n`;
-        message += `${t.budget}: ${budgets}\n\n`;
-        message += `${t.fullname}: ${name}\n`;
-        message += `${t.phone}: ${phone}`;
-        window.location.href = `https://wa.me/34611260259?text=${encodeURIComponent(message)}`;
+        const greet = lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!';
+        const msg = `${greet}\n\n${t.sector}: ${sectors}\n${t.service}: ${services}\n${t.urgency}: ${urgencies}\n${t.budget}: ${budgets}\n\n${t.fullname}: ${name}\n${t.phone}: ${phone}`;
+        window.location.href = `https://wa.me/34611260259?text=${encodeURIComponent(msg)}`;
       });
     });
   </script>
 </body>
 </html>
+
