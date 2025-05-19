@@ -102,6 +102,11 @@
       background: #1ebe5a;
     }
 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     @media (max-width: 500px) {
       .container { padding: 20px; }
     }
@@ -252,27 +257,22 @@
         document.getElementById(`flag-${lang}`).addEventListener('click', () => setLanguage(lang));
       });
 
-      document.getElementById('sector').addEventListener('change', function () {
-        const selected = this.value;
-        const langMap = {
-          'Restaurante': 'es', 'E-commerce': 'es', 'Retail': 'es', 'Servicios': 'es', 'Otro': 'es',
-          'Restaurant': 'en', 'Services': 'en', 'Other': 'en',
-          'E-Commerce': 'de', 'Einzelhandel': 'de', 'Dienstleistungen': 'de', 'Andere': 'de'
-        };
-        const lang = langMap[selected] || 'es';
-        setLanguage(lang);
-      });
-
+      // Idioma por defecto
       setLanguage('es');
 
+      // Evento de envío
       document.getElementById('quoteForm').addEventListener('submit', e => {
         e.preventDefault();
         const getValue = id => document.getElementById(id).value;
         const lang = document.querySelector('.lang-flag.active')?.id.split('-')[1] || 'es';
         const t = translations[lang];
+        const btn = document.getElementById('btn-submit');
+        btn.disabled = true;
+        btn.textContent = lang === 'en' ? 'Sending...' : lang === 'de' ? 'Senden...' : 'Enviando...';
+
         const message = 
 `${lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!'}
-        
+
 ${t.sector}: ${getValue('sector')}
 ${t.service}: ${getValue('service')}
 ${t.urgency}: ${getValue('urgency')}
@@ -281,10 +281,12 @@ ${t.budget}: ${getValue('budget')}
 ${t.fullname}: ${getValue('fullname')}
 ${t.phone}: ${getValue('phone')}`;
 
-        window.location.href = `https://wa.me/34611260259?text=${encodeURIComponent(message)}`;
+        // Redirige a WhatsApp
+        setTimeout(() => {
+          window.location.href = `https://wa.me/34611260259?text=${encodeURIComponent(message)}`;
+        }, 800);
       });
     });
   </script>
 </body>
 </html>
-
