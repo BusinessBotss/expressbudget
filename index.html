@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Business Bots – Presupuesto Express</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Express Quote – Business Bots</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
+      font-family: 'Inter', sans-serif;
       background: #000;
       color: #fff;
-      font-family: 'Inter', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,211 +20,176 @@
 
     .container {
       background: #111;
-      border-radius: 12px;
-      padding: 28px;
-      max-width: 500px;
+      border-radius: 14px;
+      padding: 30px;
       width: 100%;
-      box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05);
+      max-width: 480px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
     }
 
     .lang-selector {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 18px;
+      margin-bottom: 25px;
     }
 
     .lang-flag {
+      background: #222;
+      padding: 6px 12px;
+      border-radius: 6px;
       cursor: pointer;
-      opacity: 0.6;
-      font-size: 0.9rem;
-      padding: 5px 10px;
-      border-radius: 4px;
       font-weight: 600;
-      transition: all 0.2s ease;
+      opacity: 0.6;
+      transition: 0.2s ease;
     }
 
     .lang-flag.active,
     .lang-flag:hover {
-      background: #222;
       opacity: 1;
     }
 
     h1 {
       text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 22px;
+      font-size: 1.9rem;
       font-weight: 600;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      margin-bottom: 25px;
     }
 
     label {
-      font-size: 0.95rem;
-      margin-bottom: 6px;
+      display: block;
       font-weight: 600;
-      color: #eee;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
     }
 
-    select, input {
+    select,
+    input {
       width: 100%;
-      padding: 10px 12px;
+      padding: 12px;
       background: #222;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
       color: #fff;
-      transition: background 0.2s;
-    }
-
-    select:hover, input:hover {
-      background: #2c2c2c;
-    }
-
-    .btn {
-      background: #25d366;
-      color: #000;
-      padding: 14px;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
+      margin-bottom: 20px;
     }
 
-    .btn:hover {
+    select:focus,
+    input:focus {
+      outline: 2px solid #25d366;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-weight: 600;
+      font-size: 1rem;
+      background: #25d366;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
       background: #1ebe5a;
     }
 
-    .btn:disabled {
+    button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
-    }
-
-    @media (max-width: 500px) {
-      .container { padding: 20px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="lang-selector">
+      <span id="flag-en" class="lang-flag active">EN</span>
       <span id="flag-es" class="lang-flag">ES</span>
-      <span id="flag-en" class="lang-flag">EN</span>
       <span id="flag-de" class="lang-flag">GER</span>
     </div>
-    <h1 id="title">Presupuesto Express</h1>
+    <h1 id="title">Express Quote</h1>
 
     <form id="quoteForm">
-      <div class="section">
-        <label id="label-sector" for="sector">Sector o tipo de negocio</label>
-        <select id="sector" required></select>
-      </div>
-      <div class="section">
-        <label id="label-service" for="service">Servicios necesarios</label>
-        <select id="service" required></select>
-      </div>
-      <div class="section">
-        <label id="label-urgency" for="urgency">Urgencia del servicio</label>
-        <select id="urgency" required></select>
-      </div>
-      <div class="section">
-        <label id="label-budget" for="budget">Presupuesto aproximado</label>
-        <select id="budget" required></select>
-      </div>
-      <div class="section">
-        <label id="label-fullname" for="fullname">Nombre completo</label>
-        <input type="text" id="fullname" placeholder="Tu nombre" required />
-      </div>
-      <div class="section">
-        <label id="label-phone" for="phone">Teléfono WhatsApp</label>
-        <input type="tel" id="phone" placeholder="+34 611 26 02 59" required />
-      </div>
-      <button type="submit" class="btn" id="btn-submit">Enviar vía WhatsApp</button>
+      <label id="label-sector" for="sector">Sector / Business type</label>
+      <select id="sector" required></select>
+
+      <label id="label-service" for="service">Services required</label>
+      <select id="service" required></select>
+
+      <label id="label-urgency" for="urgency">Approx. urgency</label>
+      <select id="urgency" required></select>
+
+      <label id="label-fullname" for="fullname">Full Name</label>
+      <input type="text" id="fullname" placeholder="Your name" required />
+
+      <label id="label-phone" for="phone">WhatsApp Number</label>
+      <input type="tel" id="phone" placeholder="+44 7123 456789" required />
+
+      <button type="submit" id="btn-submit">Send via WhatsApp</button>
     </form>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const translations = {
-        es: {
-          title: 'Presupuesto Express',
-          sector: 'Sector o tipo de negocio',
-          sectors: ['Restaurante', 'E-commerce', 'Retail', 'Servicios', 'Otro'],
-          service: 'Servicios necesarios',
-          services: ['WhatsApp Bot', 'Email Marketing', 'Instagram Bot', 'Tarjetas NFC', 'Rediseño de Menú', 'Otro'],
-          urgency: 'Urgencia del servicio',
-          urgencies: ['1 semana', '3 semanas', '+1 mes'],
-          budget: 'Presupuesto aproximado',
-          budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Otro'],
-          fullname: 'Nombre completo',
-          phone: 'Teléfono WhatsApp',
-          btn: 'Enviar vía WhatsApp',
-          placeholder: {
-            select: 'Selecciona una opción',
-            name: 'Tu nombre',
-            phone: '+34 611 26 02 59'
-          }
-        },
         en: {
-          title: 'Express Budget',
+          title: 'Express Quote',
           sector: 'Sector / Business type',
-          sectors: ['Restaurant', 'E-commerce', 'Retail', 'Services', 'Other'],
+          sectors: ['Consulting', 'E-commerce', 'Retail', 'Hospitality', 'Other'],
           service: 'Services required',
-          services: ['WhatsApp Bot', 'Email Marketing', 'Instagram Bot', 'NFC Cards', 'Menu Redesign', 'Other'],
-          urgency: 'Service urgency',
-          urgencies: ['1 week', '3 weeks', '+1 month'],
-          budget: 'Approx. budget',
-          budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Other'],
+          services: ['WhatsApp Bot', 'NFC Cards', 'Web Redesign', 'Automation', 'Other'],
+          urgency: 'Approx. urgency',
+          urgencies: ['Immediate', '1 Week', '2–3 Weeks', '+1 Month'],
           fullname: 'Full Name',
           phone: 'WhatsApp Number',
           btn: 'Send via WhatsApp',
-          placeholder: {
-            select: 'Select an option',
-            name: 'Your name',
-            phone: '+44 7123 456789'
-          }
+          placeholder: { name: 'Your name', phone: '+44 7123 456789' }
+        },
+        es: {
+          title: 'Presupuesto Express',
+          sector: 'Sector o tipo de negocio',
+          sectors: ['Consultoría', 'E-commerce', 'Retail', 'Hostelería', 'Otro'],
+          service: 'Servicios necesarios',
+          services: ['Bot WhatsApp', 'Tarjetas NFC', 'Rediseño Web', 'Automatización', 'Otro'],
+          urgency: 'Urgencia estimada',
+          urgencies: ['Inmediata', '1 Semana', '2–3 Semanas', '+1 Mes'],
+          fullname: 'Nombre completo',
+          phone: 'Número de WhatsApp',
+          btn: 'Enviar vía WhatsApp',
+          placeholder: { name: 'Tu nombre', phone: '+34 611 26 02 59' }
         },
         de: {
           title: 'Express Angebot',
           sector: 'Branche / Geschäftstyp',
-          sectors: ['Restaurant', 'E-Commerce', 'Einzelhandel', 'Dienstleistungen', 'Andere'],
-          service: 'Erforderliche Services',
-          services: ['WhatsApp Bot', 'E-Mail Marketing', 'Instagram Bot', 'NFC Karten', 'Menü Neustaltung', 'Andere'],
-          urgency: 'Dringlichkeit',
-          urgencies: ['1 Woche', '3 Wochen', '+1 Monat'],
-          budget: 'Ungefähres Budget',
-          budgets: ['<100€', '100€-500€', '500€-1.000€', '1.000€-5.000€', '>5.000€', 'Andere'],
+          sectors: ['Beratung', 'E-Commerce', 'Einzelhandel', 'Gastgewerbe', 'Andere'],
+          service: 'Erforderliche Dienste',
+          services: ['WhatsApp Bot', 'NFC-Karten', 'Web-Relaunch', 'Automatisierung', 'Andere'],
+          urgency: 'Ungefähre Dringlichkeit',
+          urgencies: ['Sofort', '1 Woche', '2–3 Wochen', '+1 Monat'],
           fullname: 'Vollständiger Name',
-          phone: 'WhatsApp Nummer',
+          phone: 'WhatsApp-Nummer',
           btn: 'Per WhatsApp senden',
-          placeholder: {
-            select: 'Option wählen',
-            name: 'Ihr Name',
-            phone: '+49 171 1234567'
-          }
+          placeholder: { name: 'Ihr Name', phone: '+49 171 1234567' }
         }
       };
 
-      function populate(id, items, placeholder) {
+      function populate(id, options, placeholder) {
         const select = document.getElementById(id);
         select.innerHTML = '';
-        const defaultOption = document.createElement('option');
-        defaultOption.value = '';
-        defaultOption.textContent = placeholder;
-        defaultOption.disabled = true;
-        defaultOption.selected = true;
-        select.appendChild(defaultOption);
-        items.forEach(item => {
-          const option = document.createElement('option');
-          option.value = item;
-          option.textContent = item;
-          select.appendChild(option);
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.disabled = true;
+        opt.selected = true;
+        opt.textContent = 'Select an option';
+        select.appendChild(opt);
+        options.forEach(value => {
+          const o = document.createElement('option');
+          o.value = value;
+          o.textContent = value;
+          select.appendChild(o);
         });
       }
 
@@ -235,53 +199,46 @@
         document.getElementById('label-sector').textContent = t.sector;
         document.getElementById('label-service').textContent = t.service;
         document.getElementById('label-urgency').textContent = t.urgency;
-        document.getElementById('label-budget').textContent = t.budget;
         document.getElementById('label-fullname').textContent = t.fullname;
         document.getElementById('label-phone').textContent = t.phone;
         document.getElementById('btn-submit').textContent = t.btn;
-
         document.getElementById('fullname').placeholder = t.placeholder.name;
         document.getElementById('phone').placeholder = t.placeholder.phone;
 
-        populate('sector', t.sectors, t.placeholder.select);
-        populate('service', t.services, t.placeholder.select);
-        populate('urgency', t.urgencies, t.placeholder.select);
-        populate('budget', t.budgets, t.placeholder.select);
+        populate('sector', t.sectors);
+        populate('service', t.services);
+        populate('urgency', t.urgencies);
 
         document.querySelectorAll('.lang-flag').forEach(span => {
-          span.classList.toggle('active', span.id.endsWith(`-${lang}`));
+          span.classList.remove('active');
         });
+        document.getElementById(`flag-${lang}`).classList.add('active');
       }
 
-      ['es', 'en', 'de'].forEach(lang => {
+      ['en', 'es', 'de'].forEach(lang => {
         document.getElementById(`flag-${lang}`).addEventListener('click', () => setLanguage(lang));
       });
 
-      // Idioma por defecto
-      setLanguage('es');
+      setLanguage('en'); // Default language
 
-      // Evento de envío
       document.getElementById('quoteForm').addEventListener('submit', e => {
         e.preventDefault();
-        const getValue = id => document.getElementById(id).value;
-        const lang = document.querySelector('.lang-flag.active')?.id.split('-')[1] || 'es';
+        const get = id => document.getElementById(id).value;
+        const lang = document.querySelector('.lang-flag.active').id.split('-')[1];
         const t = translations[lang];
         const btn = document.getElementById('btn-submit');
+
         btn.disabled = true;
-        btn.textContent = lang === 'en' ? 'Sending...' : lang === 'de' ? 'Senden...' : 'Enviando...';
+        btn.textContent = lang === 'es' ? 'Enviando...' : lang === 'de' ? 'Senden...' : 'Sending...';
 
         const message = 
-`${lang === 'en' ? 'Hello Business Bots!' : lang === 'de' ? 'Hallo Business Bots!' : '¡Hola Business Bots!'}
+`${t.title}
+${t.sector}: ${get('sector')}
+${t.service}: ${get('service')}
+${t.urgency}: ${get('urgency')}
+${t.fullname}: ${get('fullname')}
+${t.phone}: ${get('phone')}`;
 
-${t.sector}: ${getValue('sector')}
-${t.service}: ${getValue('service')}
-${t.urgency}: ${getValue('urgency')}
-${t.budget}: ${getValue('budget')}
-
-${t.fullname}: ${getValue('fullname')}
-${t.phone}: ${getValue('phone')}`;
-
-        // Redirige a WhatsApp
         setTimeout(() => {
           window.location.href = `https://wa.me/34611260259?text=${encodeURIComponent(message)}`;
         }, 800);
